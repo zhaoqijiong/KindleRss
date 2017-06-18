@@ -53,6 +53,22 @@ namespace KindleWorker {
                 var items = feed.Items.ToArray();
 
                 Logger.DebugFormat("rss update url : {0} count :{1}", r.Url, items.Length);
+
+                var list = new List<RssItem>();
+
+                foreach (var item in items) {
+                    list.Add(new RssItem(){
+                        Id = 0,
+                        Url = item.Link,
+                        Guid = item.UniqueLinkOrName,
+                        PubTime = item.PublicationUtcTime.ToLocalTime().ToString(),
+                        RssId = r.Id,
+                        Title = item.Title,
+                    });
+                }
+
+
+                db.AddRssItems(r.Id,list);
             }
         }
 

@@ -53,12 +53,21 @@ namespace KindleWorker.Models
             (t as XmlTableRss).Add(rss);
         }
 
-        #endregion
-
-        #region rssitem
 
 
+		#endregion
 
+		#region rssitem
+
+		public void AddRssItems(int rssId, List<RssItem> items) {
+            var tname = $"RssItem_{rssId}";
+            if (!_tables.ContainsKey(tname)) {
+                return;
+            }
+
+            var t = _tables[tname] as XmlTableRssItem;
+            t.Add(items);
+		}
 
         #endregion
     }

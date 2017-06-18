@@ -8,6 +8,6 @@ namespace KindleWorker.Models {
         void Init();
         List<Rss> GetRssList();
         void AddRss(Rss rss);
-
+        void AddRssItems(int rssId,List<RssItem> items);
     }
 }

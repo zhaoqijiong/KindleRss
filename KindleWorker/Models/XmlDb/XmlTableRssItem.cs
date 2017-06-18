@@ -50,15 +50,32 @@ namespace KindleWorker.Models.XmlDb {
 
 		public void Add(RssItem item) {
 			_doc.Root.Add(new XElement("rssitem",
-									   new XAttribute("id", item.Id),
-									   new XAttribute("rssid", item.RssId),
-									   new XAttribute("url", item.Url),
-									   new XAttribute("pubtime", item.PubTime),
-                                       new XAttribute("title",item.Title),
-                                       new XAttribute("guid",item.Guid)
-									  ));
+						   new XAttribute("id", item.Id),
+						   new XAttribute("rssid", item.RssId),
+						   new XAttribute("url", item.Url),
+						   new XAttribute("pubtime", item.PubTime),
+                           new XAttribute("title",item.Title),
+                           new XAttribute("guid",item.Guid)
+						  ));
 
 			_doc.Save(_xmlFileName);
 		}
-    }
+
+		public void Add(List<RssItem> items) {
+
+            foreach (var item in items) {
+				_doc.Root.Add(new XElement("rssitem",
+							   new XAttribute("id", item.Id),
+							   new XAttribute("rssid", item.RssId),
+							   new XAttribute("url", item.Url),
+							   new XAttribute("pubtime", item.PubTime),
+							   new XAttribute("title", item.Title),
+							   new XAttribute("guid", item.Guid)
+							  ));
+            }
+
+			_doc.Save(_xmlFileName);
+		}
+
+	}
 }
