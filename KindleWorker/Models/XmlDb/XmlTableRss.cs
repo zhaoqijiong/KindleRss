@@ -10,6 +10,7 @@ namespace KindleWorker.Models.XmlDb {
         private string _TableName = "Rss.xml";
         private XDocument _doc;
 
+        //TODO: 自增长id
         public XmlTableRss() {
         }
 

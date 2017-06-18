@@ -66,6 +66,15 @@
     <Reference Include="TNX.RssReader">
       <HintPath>..\packages\TnxRssReader.1.1.4\lib\TNX.RssReader.dll</HintPath>
     </Reference>
+    <Reference Include="Ivony.Html.Parser.Regulars">
+      <HintPath>..\packages\Ivony.Html.Parser.Regulars.1.0.0\lib\Ivony.Html.Parser.Regulars.dll</HintPath>
+    </Reference>
+    <Reference Include="Ivony.Html.Parser">
+      <HintPath>..\packages\Ivony.Html.Parser.3.0.0.0\lib\net40\Ivony.Html.Parser.dll</HintPath>
+    </Reference>
+    <Reference Include="Ivony.Core">
+      <HintPath>..\packages\Ivony.Core.1.1.1\lib\Ivony.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RssHelper.cs" />
