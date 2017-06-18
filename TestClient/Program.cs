@@ -7,6 +7,8 @@ namespace TestClient {
 
             KindleWorker.KindleWorker w = new KindleWorker.KindleWorker();
             w.Init();
+
+            w.DoUpdate();
         }
     }
 }

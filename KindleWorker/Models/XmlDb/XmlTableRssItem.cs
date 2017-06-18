@@ -8,7 +8,7 @@ namespace KindleWorker.Models.XmlDb {
     public class XmlTableRssItem :InterfaceXmlTable{
 		private string _rootPath;
 		private string _xmlFileName;
-        private string _TableName = "RssItem_.xml";
+        private string _TableName = "RssItem_";
 		private XDocument _doc;
 
 		public XmlTableRssItem() {
@@ -16,13 +16,14 @@ namespace KindleWorker.Models.XmlDb {
 
 		public void CheckAndInit(string rootPath,int rssId) {
 			_rootPath = rootPath;
-            _xmlFileName = System.IO.Path.Combine(rootPath, $"{_TableName}{rssId}");
+            _xmlFileName = System.IO.Path.Combine(rootPath, $"{_TableName}{rssId}.xml");
 
 			if (System.IO.File.Exists(_xmlFileName)) {
-				_doc = XDocument.Parse(_xmlFileName);
+				_doc = XDocument.Load(_xmlFileName);
 
 			} else {
 				_doc = new XDocument();
+                _doc.Add(new XElement("root"));
 				_doc.Save(_xmlFileName);
 			}
 

@@ -18,10 +18,11 @@ namespace KindleWorker.Models.XmlDb {
             _xmlFileName = System.IO.Path.Combine(rootPath, _TableName);
 
             if (System.IO.File.Exists(_xmlFileName)) {
-                _doc = XDocument.Parse(_xmlFileName);
+                _doc = XDocument.Load(_xmlFileName);
 
             }else {
                 _doc = new XDocument();
+                _doc.Add(new XElement("root"));
                 _doc.Save(_xmlFileName);
             }
 

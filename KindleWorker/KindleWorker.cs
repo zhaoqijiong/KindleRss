@@ -2,6 +2,7 @@
 using KindleWorker.Models;
 using System.Collections.Generic;
 using log4net;
+using System.Linq;
 
 namespace KindleWorker {
     public class KindleWorker {
@@ -29,8 +30,6 @@ namespace KindleWorker {
 
             db.Init();
 
-
-
         }
 
         /// <summary>
@@ -48,9 +47,12 @@ namespace KindleWorker {
         /// <summary>
         /// 获取Rss 列表
         /// </summary>
-        public void CheckRssUpdate(){
+        private void CheckRssUpdate(){
             foreach (var r in _rssList) {
+                var feed = TNX.RssReader.RssHelper.ReadFeed(r.Url);
+                var items = feed.Items.ToArray();
 
+                Logger.DebugFormat("rss update url : {0} count :{1}", r.Url, items.Length);
             }
         }
 

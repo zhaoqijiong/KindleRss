@@ -55,16 +55,16 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="GetRssFeed">
-      <HintPath>..\packages\GetRssFeed.0.9.3\lib\GetRssFeed.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
+    <Reference Include="TNX.ResolveIT">
+      <HintPath>..\packages\TnxResolveIT.1.0.1\lib\TNX.ResolveIT.dll</HintPath>
+    </Reference>
+    <Reference Include="TNX.RssReader">
+      <HintPath>..\packages\TnxRssReader.1.1.4\lib\TNX.RssReader.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

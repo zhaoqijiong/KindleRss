@@ -42,13 +42,13 @@ namespace KindleWorker.Models
 
         #region rss
         public List<Rss> GetRssList() {
-            var t = _tables["rss"];
+            var t = _tables["Rss"];
 
             return (t as XmlTableRss).GetAll();
         }
 
         public void AddRss(Rss rss) {
-            var t = _tables["rss"];
+            var t = _tables["Rss"];
 
             (t as XmlTableRss).Add(rss);
         }
