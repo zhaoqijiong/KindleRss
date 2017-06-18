@@ -17,7 +17,7 @@ namespace KindleWorker {
 
             switch (dbtype) {
                 case "xml":
-                    db = new XmlDb();
+                    db = new XmlDatabase();
 
                     break;
                 default:
