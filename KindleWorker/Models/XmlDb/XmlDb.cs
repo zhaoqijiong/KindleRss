@@ -1,20 +1,21 @@
-﻿﻿using System;
+﻿using System;
+using System.Collections.Generic;
 using log4net;
-
+using KindleWorker.Models.XmlDb;
 
 namespace KindleWorker.Models
 {
-    public class XmlDatabase : InterfaceKindleDb
-    {
+    public class XmlDatabase : InterfaceKindleDb {
         private string _rootPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "xmldb");
         private static ILog Logger = log4net.LogManager.GetLogger(typeof(XmlDatabase));
 
-        public XmlDatabase()
-        {
+        private Dictionary<string, InterfaceXmlTable> _tables = new Dictionary<string, InterfaceXmlTable>();
+
+        public XmlDatabase() {
         }
 
 
-        public void Init(){
+        public void Init() {
             Logger.DebugFormat("xmldb init");
 
 
@@ -24,9 +25,41 @@ namespace KindleWorker.Models
                 System.IO.Directory.CreateDirectory(_rootPath);
             }
 
+            var tRss = new XmlTableRss();
+            _tables.Add("Rss", tRss);
 
+            tRss.CheckAndInit(_rootPath);
+
+            foreach (var i in tRss.GetAll()) {
+                var name = $"RssItem_{i.Id}";
+                var t = new XmlTableRssItem();
+                t.CheckAndInit(_rootPath, i.Id);
+                _tables.Add(name,t);
+            }
 
 
         }
+
+        #region rss
+        public List<Rss> GetRssList() {
+            var t = _tables["rss"];
+
+            return (t as XmlTableRss).GetAll();
+        }
+
+        public void AddRss(Rss rss) {
+            var t = _tables["rss"];
+
+            (t as XmlTableRss).Add(rss);
+        }
+
+        #endregion
+
+        #region rssitem
+
+
+
+
+        #endregion
     }
 }

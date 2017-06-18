@@ -22,5 +22,7 @@ namespace KindleWorker.Models {
         public string PubTime { get; set; }
 
         public string Guid { get; set; }
+
+        public string Url { get; set; }
     }
 }

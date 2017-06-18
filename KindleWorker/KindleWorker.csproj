@@ -77,6 +77,7 @@
     <Compile Include="Models\InterfaceKindleDb.cs" />
     <Compile Include="Models\XmlDb\InterfaceXmlTable.cs" />
     <Compile Include="Models\XmlDb\XmlTableRss.cs" />
+    <Compile Include="Models\XmlDb\XmlTableRssItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
