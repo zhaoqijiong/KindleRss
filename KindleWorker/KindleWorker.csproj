@@ -87,6 +87,7 @@
     <Compile Include="Models\XmlDb\InterfaceXmlTable.cs" />
     <Compile Include="Models\XmlDb\XmlTableRss.cs" />
     <Compile Include="Models\XmlDb\XmlTableRssItem.cs" />
+    <Compile Include="WebParser\InterfacePageParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -99,6 +100,7 @@
     <Folder Include="Models\" />
     <Folder Include="Models\XmlDb\" />
     <Folder Include="Config\" />
+    <Folder Include="WebParser\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
