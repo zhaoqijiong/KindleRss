@@ -1,0 +1,28 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClient", "TestClient\TestClient.csproj", "{1158F1E3-3918-4D58-BCF2-E363E3B5BBE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KindleWorker", "KindleWorker\KindleWorker.csproj", "{9360C353-019E-4E04-BE47-23754C4F9A9E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6996E1F3-0112-4226-AC1E-C72ACA9F0D25}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1158F1E3-3918-4D58-BCF2-E363E3B5BBE1}.Debug|x86.ActiveCfg = Debug|x86
+		{1158F1E3-3918-4D58-BCF2-E363E3B5BBE1}.Debug|x86.Build.0 = Debug|x86
+		{1158F1E3-3918-4D58-BCF2-E363E3B5BBE1}.Release|x86.ActiveCfg = Release|x86
+		{1158F1E3-3918-4D58-BCF2-E363E3B5BBE1}.Release|x86.Build.0 = Release|x86
+		{9360C353-019E-4E04-BE47-23754C4F9A9E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9360C353-019E-4E04-BE47-23754C4F9A9E}.Debug|x86.Build.0 = Debug|Any CPU
+		{9360C353-019E-4E04-BE47-23754C4F9A9E}.Release|x86.ActiveCfg = Release|Any CPU
+		{9360C353-019E-4E04-BE47-23754C4F9A9E}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
