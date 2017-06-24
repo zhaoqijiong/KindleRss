@@ -23,10 +23,12 @@ namespace KindleWorker.Models.XmlDb {
 			if (System.IO.File.Exists(_xmlFileName)) {
 				_doc = XDocument.Load(_xmlFileName);
 
-                _maxId = _doc.Descendants().OfType<XElement>()
+                if (_doc.Root != null && _doc.Root.Nodes().Count() > 0) {
+                    _maxId = _doc.Descendants().OfType<XElement>()
                                 .Where(n => n.Name == "rssitem" && n.Attribute("id") != null)
                                 .Select(n => n.Attribute("id").Value).ToList()
                                 .ConvertAll(n => int.Parse(n)).Max();
+                }
 			} else {
 				_doc = new XDocument();
                 _doc.Add(new XElement("root"));
@@ -56,8 +58,10 @@ namespace KindleWorker.Models.XmlDb {
 
 		public void Add(RssItem item) {
 
+
+
             var guids = _doc.Descendants().OfType<XElement>()
-                            .Where(n => n.Name.Equals("rssitem") && n.Attribute("guid") != null)
+                            .Where(n => n.Name == "rssitem" && n.Attribute("guid") != null)
                             .Select(n => n.Attribute("guid").Value).ToList();
 
             if (guids.Contains(item.Guid)) {
@@ -83,7 +87,7 @@ namespace KindleWorker.Models.XmlDb {
 		public void Add(List<RssItem> items) {
 
             var guids = _doc.Descendants().OfType<XElement>()
-                            .Where(n => n.Name.Equals("rssitem") && n.Attribute("guid") != null)
+                            .Where(n => n.Name == "rssitem" && n.Attribute("guid") != null)
                             .Select(n => n.Attribute("guid").Value).ToList();
 
             foreach (var item in items) {
