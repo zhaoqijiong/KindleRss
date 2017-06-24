@@ -10,7 +10,9 @@ namespace KindleWorker.Models.XmlDb {
         private string _TableName = "Rss.xml";
         private XDocument _doc;
 
-        //TODO: 自增长id
+        private int _maxId = 0;
+
+
         public XmlTableRss() {
         }
 
@@ -21,12 +23,17 @@ namespace KindleWorker.Models.XmlDb {
             if (System.IO.File.Exists(_xmlFileName)) {
                 _doc = XDocument.Load(_xmlFileName);
 
-            }else {
+
+                _maxId = _doc.Descendants().OfType<XElement>()
+                                .Where(n=>n.Name == "rss" && n.Attribute("id") != null)
+                                .Select(n=>n.Attribute("id").Value).ToList()
+                                .ConvertAll(n=>int.Parse(n)).Max();
+                
+            } else {
                 _doc = new XDocument();
                 _doc.Add(new XElement("root"));
                 _doc.Save(_xmlFileName);
             }
-
         }
 
         public List<Rss> GetAll(){
@@ -47,6 +54,11 @@ namespace KindleWorker.Models.XmlDb {
         }
 
         public void Add(Rss item){
+
+            if (item .Id == 0 || item.Id < _maxId) {
+                item.Id = ++_maxId;
+            }
+
             _doc.Root.Add(new XElement("rss",
                                        new XAttribute("id",item.Id),
                                        new XAttribute("name",item.Name),

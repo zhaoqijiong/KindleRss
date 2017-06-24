@@ -11,6 +11,8 @@ namespace KindleWorker.Models.XmlDb {
         private string _TableName = "RssItem_";
 		private XDocument _doc;
 
+        private int _maxId = 0;
+
 		public XmlTableRssItem() {
 		}
 
@@ -21,6 +23,10 @@ namespace KindleWorker.Models.XmlDb {
 			if (System.IO.File.Exists(_xmlFileName)) {
 				_doc = XDocument.Load(_xmlFileName);
 
+                _maxId = _doc.Descendants().OfType<XElement>()
+                                .Where(n => n.Name == "rssitem" && n.Attribute("id") != null)
+                                .Select(n => n.Attribute("id").Value).ToList()
+                                .ConvertAll(n => int.Parse(n)).Max();
 			} else {
 				_doc = new XDocument();
                 _doc.Add(new XElement("root"));
@@ -49,7 +55,20 @@ namespace KindleWorker.Models.XmlDb {
 		}
 
 		public void Add(RssItem item) {
-			_doc.Root.Add(new XElement("rssitem",
+
+            var guids = _doc.Descendants().OfType<XElement>()
+                            .Where(n => n.Name.Equals("rssitem") && n.Attribute("guid") != null)
+                            .Select(n => n.Attribute("guid").Value).ToList();
+
+            if (guids.Contains(item.Guid)) {
+                return;
+            }
+
+            if (item.Id == 0 || item.Id < _maxId) {
+                item.Id = ++_maxId;
+            }
+
+            _doc.Root.Add(new XElement("rssitem",
 						   new XAttribute("id", item.Id),
 						   new XAttribute("rssid", item.RssId),
 						   new XAttribute("url", item.Url),
@@ -63,8 +82,20 @@ namespace KindleWorker.Models.XmlDb {
 
 		public void Add(List<RssItem> items) {
 
+            var guids = _doc.Descendants().OfType<XElement>()
+                            .Where(n => n.Name.Equals("rssitem") && n.Attribute("guid") != null)
+                            .Select(n => n.Attribute("guid").Value).ToList();
+
             foreach (var item in items) {
-				_doc.Root.Add(new XElement("rssitem",
+                if (item.Id == 0 || item.Id < _maxId) {
+                    item.Id = ++_maxId;
+                }
+
+                if (guids.Contains(item.Guid)) {
+                    continue;
+                }
+
+                _doc.Root.Add(new XElement("rssitem",
 							   new XAttribute("id", item.Id),
 							   new XAttribute("rssid", item.RssId),
 							   new XAttribute("url", item.Url),
