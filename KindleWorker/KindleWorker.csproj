@@ -75,6 +75,13 @@
     <Reference Include="Ivony.Core">
       <HintPath>..\packages\Ivony.Core.1.1.1\lib\Ivony.Core.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RssHelper.cs" />
@@ -88,6 +95,8 @@
     <Compile Include="Models\XmlDb\XmlTableRss.cs" />
     <Compile Include="Models\XmlDb\XmlTableRssItem.cs" />
     <Compile Include="WebParser\InterfacePageParser.cs" />
+    <Compile Include="WebParser\HttpDownloadHelper.cs" />
+    <Compile Include="WebParser\HttpWorkDefine.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -60,9 +60,9 @@ namespace KindleWorker.Models.XmlDb {
 
 
 
-            var guids = _doc.Descendants().OfType<XElement>()
+            var guids = _doc.Descendants()
                             .Where(n => n.Name == "rssitem" && n.Attribute("guid") != null)
-                            .Select(n => n.Attribute("guid").Value).ToList();
+                            .Select(n => n.Attribute("guid")?.Value).ToList();
 
             if (guids.Contains(item.Guid)) {
                 return;
@@ -72,7 +72,7 @@ namespace KindleWorker.Models.XmlDb {
                 item.Id = ++_maxId;
             }
 
-            _doc.Root.Add(new XElement("rssitem",
+            _doc.Root?.Add(new XElement("rssitem",
 						   new XAttribute("id", item.Id),
 						   new XAttribute("rssid", item.RssId),
 						   new XAttribute("url", item.Url),
@@ -88,7 +88,7 @@ namespace KindleWorker.Models.XmlDb {
 
             var guids = _doc.Descendants().OfType<XElement>()
                             .Where(n => n.Name == "rssitem" && n.Attribute("guid") != null)
-                            .Select(n => n.Attribute("guid").Value).ToList();
+                            .Select(n => n.Attribute("guid")?.Value).ToList();
 
             foreach (var item in items) {
                 if (item.Id == 0 || item.Id < _maxId) {
@@ -99,7 +99,7 @@ namespace KindleWorker.Models.XmlDb {
                     continue;
                 }
 
-                _doc.Root.Add(new XElement("rssitem",
+                _doc.Root?.Add(new XElement("rssitem",
 							   new XAttribute("id", item.Id),
 							   new XAttribute("rssid", item.RssId),
 							   new XAttribute("url", item.Url),
@@ -112,5 +112,29 @@ namespace KindleWorker.Models.XmlDb {
 			_doc.Save(_xmlFileName);
 		}
 
-	}
+	    public List<RssItem> GetItem(DateTime afterTime) {
+		    var items = _doc.DescendantNodes().OfType<XElement>().Where(n => n.Name == "rssitem").ToArray();
+
+		    var list = new List<RssItem>();
+
+		    foreach (var i in items) {
+			    var date = DateTime.Parse(i.Attribute("pubtime").Value);
+			    if (date < afterTime) {
+				    continue;
+			    }
+			    
+			    
+			    list.Add(new RssItem() {
+				    Id = int.Parse(i.Attribute("id").Value),
+				    RssId = int.Parse(i.Attribute("rssid").Value),
+				    PubTime = i.Attribute("pubtime").Value,
+				    Url = i.Attribute("url").Value,
+				    Title = i.Attribute("title").Value,
+				    Guid = i.Attribute("guid").Value
+			    });
+		    }
+
+		    return list;
+	    }
+    }
 }

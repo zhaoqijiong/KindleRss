@@ -3,6 +3,10 @@ using KindleWorker.Models;
 using System.Collections.Generic;
 using log4net;
 using System.Linq;
+using System.Threading.Tasks;
+using KindleWorker.WebParser;
+using TNX.RssReader;
+using RssItem = KindleWorker.Models.RssItem;
 
 namespace KindleWorker {
     public class KindleWorker {
@@ -39,7 +43,6 @@ namespace KindleWorker {
 			GetDbRssList();
 
 			if (_rssList.Count > 0) {
-
                 CheckRssUpdate();
 			}
         }
@@ -49,7 +52,14 @@ namespace KindleWorker {
         /// </summary>
         private void CheckRssUpdate(){
             foreach (var r in _rssList) {
-                var feed = TNX.RssReader.RssHelper.ReadFeed(r.Url);
+                RssFeed feed = null;
+                try {
+                    feed = TNX.RssReader.RssHelper.ReadFeed(r.Url);
+                } catch (Exception e) {
+                    Logger.Error(e.Message);
+                    continue;
+                }
+                
                 var items = feed.Items.ToArray();
 
                 Logger.DebugFormat("rss update url : {0} count :{1}", r.Url, items.Length);
@@ -69,6 +79,26 @@ namespace KindleWorker {
 
 
                 db.AddRssItems(r.Id,list);
+            }
+        }
+
+        private async Task DownloadHtmlContent() {
+            foreach (var rss in _rssList) {
+                var items = db.GetItems(rss.Id, DateTime.Today.AddDays(-1));
+
+                foreach (var rssItem in items) {
+                    var http = new HttpDownloadHelper(new HttpWorkDefine() {
+                        RssId = rss.Id.ToString(),
+                        RssItemId = rssItem.Id.ToString(),
+                        Url = rssItem.Url
+                    });
+
+                    if (http.CheckFileDownloaded()) {
+                        continue;
+                    }
+
+                    await http.Do();
+                }
             }
         }
 

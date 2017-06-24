@@ -69,6 +69,17 @@ namespace KindleWorker.Models
             t.Add(items);
 		}
 
+        public List<RssItem> GetItems(int rssId, DateTime afterTime) {
+            var tname = $"RssItem_{rssId}";
+            if (!_tables.ContainsKey(tname)) {
+                return new List<RssItem>();
+            }
+
+            var t = _tables[tname] as XmlTableRssItem;
+
+            return t.GetItem(afterTime);
+        }
+
         #endregion
     }
 }
